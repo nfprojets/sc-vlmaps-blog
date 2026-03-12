@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SIREN: Semantic, Initialization-Free Registration of Multi-Robot
+    Gaussian Splatting Maps</title>
+
+  <!--  =====  FONTS & ICONS  =====  -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="icon" href="./static/favicon.svg" />
+
+  <!--  =====  CSS  =====  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+
+  <!--  =====  GOOGLE SITE  =====  -->
+  <meta name="google-site-verification" content="yvparm_NUQpZeXkGYBE5p82vFIBNk_hBQHXrFt9pi2k" />
+
+  <style>
+    /* --- GLOBAL --- */
+    body {
+      background: #fff;
+      font-family: "Noto Sans", sans-serif;
+      font-size: 18px;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    section {
+      padding: 2.5rem 0;
+    }
+
+    /* --- SECTION COLORS --- */
+    .section-gray {
+      background: #f7f7f7;
+    }
+
+    /* --- TYPOGRAPHY & LINKS --- */
+    .task-title {
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .publication-authors {
+      margin-bottom: 1rem;
+    }
+
+    /* space below authors */
+    .publication-authors a {
+      color: #3273dc;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    /* --- HERO & SPACING TWEAKS --- */
+    .hero {
+      padding-bottom: 0.5rem;
+    }
+
+    /* tighter gap above overview */
+    #overview.section {
+      padding-top: 0.75rem;
+    }
+
+    /* tighter gap below hero */
+    .publication-links {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* gap between authors/icons & icons/logo */
+    figure.lab-logo {
+      margin-top: 1.5rem;
+    }
+
+    /* gap between icons and Princeton logo */
+    /* #sim-robot.section{padding-bottom:0.1rem;} gap above simulation section */
+    #bibtex.section- {
+      padding-top: 0rem;
+    }
+
+    /* gap above BibTeX section */
+
+    /* --- SLICK ARROWS --- */
+    .slick-prev:before,
+    .slick-next:before {
+      color: #3273dc;
+      font-size: 32px;
+    }
+
+    /* --- THUMBNAILS --- */
+    .video-thumb {
+      cursor: pointer;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 0 8px;
+    }
+
+    .video-thumb video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* --- STAND‑ALONE VIDEOS --- */
+    .overview-video,
+    .pipeline-video,
+    .sim-video {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    /* --- LAYOUT HELPERS --- */
+    .map-block {
+      margin-bottom: 3rem;
+    }
+
+    .task-carousel {
+      margin-top: 1rem;
+    }
+
+    /* --- CONTENT WIDTH CONSISTENCY --- */
+    .content-container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* --- PDF EMBED --- */
+    .pdf-container {
+      margin-top: 1.5rem;
+    }
+
+    .pdf-container object {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+
+    /* --- REAL EXP IMG --- */
+    /* --- .real-exp-img{width:100%;height:auto;max-width:100%;} --- */
+    /* --- LINK COLOR (lighter blue, closer to default hyperlinks) --- */
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    /* --- HERO ↔ OVERVIEW GAP (shrink) --- */
+    .hero {
+      padding-bottom: 0rem;
+    }
+
+    /* was 0.5rem */
+    #overview.section {
+      padding-top: 0rem;
+    }
+
+    /* was 0.75rem */
+
+    /* --- REAL-ROBOT ↔ SIMULATION GAP (shrink) --- */
+    #real-robot.section {
+      padding-top: 2.5rem;
+    }
+
+    /* default Bulma ≈2.5rem */
+    #real-robot.section {
+      padding-bottom: 2.5rem;
+    }
+
+    /* default Bulma ≈2.5rem */
+    #sim-robot.section {
+      padding-top: 2.5rem;
+    }
+
+    /* default Bulma ≈2.5rem */
+
+    /* --- SIMULATION ↔ BIBTEX GAP (shrink) --- */
+    #BibTeX.section {
+      padding-top: 0.1rem;
+    }
+
+    /* tighten above BibTeX */
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HERO with title & authors ===== -->
+  <section class="hero section">
+    <div class="hero-body">
+      <div class="container is-max-widescreen has-text-centered">
+        <h1 class="title is-2 publication-title">SC-VLMaps: Depth-Free Visual–Language Mapping via Scene Coordinate Regression</h1>
+
+        <!-- ===== AUTHORS (three rows, no underscores) ===== -->
+        <div class="is-size-5 publication-authors">
+          <div>
+            <!-- <span class="author-block"><a href="/">Author Names Omitted for Anonymous Review.</a></span> -->
+            <span class="author-block"><a
+                href="https://nfprojets.github.io/">Nanda&nbsp;Febri&nbsp;Istighfarin</a></span><sup>1</sup>,
+            <span class="author-block"><a
+                href="https://https://www.bstar.tech/">Baehoon&nbsp;Choi</a></span><sup>2</sup>,
+            <span class="author-block"><a
+                href="https://airlab.jbnu.ac.kr/">HyungGi&nbsp;Jo</a></span><sup>1</sup>
+          </div>
+        </div>
+
+        <!-- ===== AUTHORS' AFFILIATIONS (three rows, no underscores) ===== -->
+        <div class="is-size-5 publication-authors">
+          <span class="author-block"><sup>1</sup>Jeonbuk National University,</span>
+          <span class="author-block"><sup>2</sup>Bstar Robotics Co., Ltd.</span>
+        </div>
+
+        <!-- ===== RESOURCE ICONS ===== -->
+        <div class="publication-links">
+          <a href="https://2026.ieee-icra.org/" class="external-link button is-normal is-rounded is-dark"
+            target="_blank" rel="noopener">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper (Coming Soon)</span>
+          </a>
+          <a href="https://github.com/" class="external-link button is-normal is-rounded is-dark" target="_blank"
+            rel="noopener">
+            <span class="icon"><i class="fab fa-github"></i></span><span>Code (Coming Soon)</span>
+          </a>
+          <!-- <a href="https://youtu.be/" class="external-link button is-normal is-rounded is-dark"
+            target="_blank" rel="noopener">
+            <span class="icon"><i class="fab fa-youtube"></i></span><span>Video</span>
+          </a> -->
+        </div>
+
+        <!-- ===== LAB LOGO ===== -->
+        <!-- <figure class="image is-inline-block lab-logo">
+          <img src="static/lab.png" alt="Lab logo" style="max-width:600px;">
+        </figure> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OVERVIEW ===== -->
+  <section id="overview" class="section">
+    <div class="container is-max-desktop content-container has-text-centered">
+      <video class="overview-video" autoplay loop muted playsinline poster="static/thumbnails/teaser.jpg">
+        <source src="static/videos/teaser.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <p style="margin-top:1rem;">We introduce <strong>SC-VLMaps</strong>,
+        a depth-free visual–language mapping framework that constructs semantic map using
+        only monovular RGB input by leveraging scene coordinate regression network. </p>
+    </div>
+  </section>
+
+  <!-- ===== ABSTRACT ===== -->
+  <section id="abstract" class="section">
+    <div class="container is-max-desktop content-container">
+      <h2 class="title is-3 has-text-centered">Abstract</h2>
+      <p>
+        The ability to connect visual observations with human
+        language is increasingly valuable for embodied agents in
+        tasks such as navigation and semantic mapping. Existing
+        visual–language map (VLMaps) approach enables this
+        connection but typically depends on depth images to project
+        semantic features into 3D space, which limits scalability
+        due to sensor cost and deployment constraints. In this
+        work, we introduce SC-VLMaps, a depth-free visual–language
+        mapping framework that constructs semantic maps using only
+        monocular RGB input. SC-VLMaps leverages a scene coordinate
+        regression (SCR) network to predict dense 3D coordinates
+        from images, bypassing the need for depth supervision and
+        enabling implicit geometry reconstruction. The predicted
+        coordinates are fused into a voxel grid and augmented with
+        language-aligned features from a frozen visual–language
+        encoder, producing maps that are both geometrically
+        coherent and semantically enriched. By employing a
+        multi-scene training strategy, SC-VLMaps generalizes from
+        indoor datasets (7Scenes) to challenging outdoor benchmarks
+        (Cambridge Landmarks). Experiments show that SC-VLMaps
+        achieves denser, more compact maps with stronger semantic
+        alignment than VLMaps, while requiring only monocular RGB
+        images. 
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== PIPELINE ===== -->
+  <section id="pipeline" class="section">
+    <div class="container is-max-desktop content-container">
+      <h2 class="title is-3 has-text-centered">VLMaps: Our Framework</h2>
+      <p>
+        SC-VLMaps operates in two stages: offline and online.
+        (a) Offline stage: We train a scene coordinate regression network with a shared encoder and scene-specific heads to predict dense 3D scene coordinates.
+        (b) Online stage: The predicted coordinates are fused with language-aligned embeddings to generate a top-down map that is semantically indexed for language-based queries.
+
+      </p>
+      <br>
+      <video class="overview-video" preload="metadata" autoplay loop muted playsinline
+        poster="static/thumbnails/framework.jpg">
+        <source src="static/videos/framework.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <!-- <video id="summary-video" class="shadow" controls preload="metadata" width="100%"
+        poster="static/thumbnails/siren_pipeline.jpg">
+        <source src="static/videos/siren_pipeline.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video> -->
+    </div>
+
+  </section>
+
+  <!-- ===== EXPERIMENTS ===== -->
+  <section id="experiments" class="section">
+    <div class="container is-max-desktop content-container">
+      <h2 class="title is-3 has-text-centered">Experiments</h2>
+      <p class="has-text-justified">
+        We compare SC-VLMaps with the baseline VLMaps using two metrics: semantic alignment score (SAS) and voxel occupancy. 
+        The evaluation is performed on the indoor 7Scenes dataset and further extended to the outdoor Cambridge Landmarks dataset, where the baseline method fails to generate maps. 
+        Across all experiments, SC-VLMaps achieves better performance than the baseline.
+      <br>
+
+      <!-- ===== Map 1 ===== -->
+      <div class="map-block" id="map-1">
+        <h3 class="title is-4 task-title">Indoor: 7Scenes</h3>
+        <div class="task-carousel">
+          <!-- 4 videos-->
+          <div class="video-thumb"><video class="thumb-video" controls onloadstart="this.playbackRate = 0.5;" autoplay
+              loop muted playsinline poster="static/thumbnails/pumpkin.jpg" preload="metadata">
+              <source src="static/videos/pumpkin.mp4" type="video/mp4" />
+            </video></div>
+          <div class="video-thumb"><video class="thumb-video" controls onloadstart="this.playbackRate = 0.5;" autoplay
+              loop muted playsinline poster="static/thumbnails/heads.jpg" preload="metadata">
+              <source src="static/videos/heads.mp4" type="video/mp4" />
+            </video></div>
+          <div class="video-thumb"><video class="thumb-video" controls onloadstart="this.playbackRate = 0.5;" autoplay
+              loop muted playsinline poster="static/thumbnails/fire.jpg" preload="metadata">
+              <source src="static/videos/fire.mp4" type="video/mp4" />
+            </video></div>
+          <div class="video-thumb"><video class="thumb-video" controls onloadstart="this.playbackRate = 0.5;" autoplay
+              loop muted playsinline poster="static/thumbnails/office.jpg" preload="metadata">
+              <source src="static/videos/office.mp4" type="video/mp4" />
+            </video></div>
+        </div>
+      </div>
+
+      <!-- ===== Map 2 ===== -->
+      <div class="map-block" id="map-2">
+        <h3 class="title is-4 task-title">Outdoor: Cambridge Landmarks/h3>
+        <div class="task-carousel">
+          <!-- 2 videos -->
+          <div class="video-thumb"><video class="thumb-video" controls onloadstart="this.playbackRate = 0.2;" autoplay
+              loop muted playsinline poster="static/thumbnails/mary.jpg" preload="metadata">
+              <source src="static/videos/mary.mp4" type="video/mp4" />
+            </video></div>
+          <div class="video-thumb"><video class="thumb-video" controls onloadstart="this.playbackRate = 0.2;" autoplay
+              loop muted playsinline poster="static/thumbnails/shop.jpg" preload="metadata">
+              <source src="static/videos/shop.mp4" type="video/mp4" />
+            </video></div>
+        </div>
+      </div>
+      
+      </div>
+    </div>
+
+  </section>
+
+  <!-- <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{shorinwa2025siren,
+        title={SIREN: Semantic, Initialization-Free Registration of Multi-Robot Gaussian Splatting Maps},
+        author={Shorinwa, Ola and Sun, Jiankai and Schwager, Mac and Majumdar, Anirudha},
+        journal={arXiv preprint arXiv:2502.06519},
+        year={2025}
+        url={https://arxiv.org/abs/2505.06519}, 
+  }</code></pre>
+    </div>
+  </section>
+  <br> -->
+  <center class="is-size-10">
+    The website design was adapted from <a href="https://nerfies.github.io" class="external-link"><span
+        class="dnerf">Nerfies</span></a>.
+  </center>
+  <br>
+
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script>
+    $(function () {
+      // Init carousels (only those still using .task-carousel wrappers)
+      $('.task-carousel').slick({
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: false,
+        arrows: true,
+        dots: false,
+        lazyLoad: 'ondemand',
+        touchMove: true,
+        responsive: [
+          { breakpoint: 1024, settings: { slidesToShow: 1 } },
+          { breakpoint: 768, settings: { slidesToShow: 1 } },
+          { breakpoint: 480, settings: { slidesToShow: 1 } }
+        ]
+      });
+
+      // Horizontal track‑pad scroll → carousel navigation; let vertical scroll bubble up
+      $('.task-carousel').on('wheel', function (e) {
+        const deltaX = e.originalEvent.deltaX;
+        const deltaY = e.originalEvent.deltaY;
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          e.preventDefault();
+          $(this).slick(deltaX < 0 ? 'slickPrev' : 'slickNext');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
